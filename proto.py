@@ -15,15 +15,20 @@ if(os.path.exists(dirpath) and os.path.isdir(dirpath)):
 
 #checkout repo
 print('create repo')
-git.Repo.clone_from(url, dirpath)
+git.Repo.clone_from(url, dirpath, no_checkout=True)
 
 #count the number of commits to assign a hexadecimal version number
 my_repo = git.Repo('clone_repo')
 commits = list(my_repo.iter_commits('HEAD'))
-count = len(commits)
+# count = len(commits)
 
-version = hex(count)
+# version = hex(count)
+for commit in commits :
+    hex_id = commit.hexsha
+    # os.system("git reset --hard " + hex_id)
+    my_repo.git.checkout("-b", hex_id)  # donne le checkout d'un certaint commit.. TODO: compter les nb de classes de ce commit
 
-print('id_version: ' + version)
+
+# print('id_version: ' + version)
 
 #
