@@ -6,7 +6,7 @@ import csv
 import subprocess
 
 # deconstruct url to clone via ssh
-url = str(sys.argv[1])
+url = str(sys.argv[1]) # https://github.com/bendag/TP1_IFT3913
 dirpath = 'clone_repo'
 
 # check if repo already exist, if true delete it.
@@ -34,27 +34,24 @@ def files_counter(path, ext):
 
     return files_nb
 
-
 # execute tp1 metric
 def start_tp1(metric_software_name, dir_path):
     # os.system("java -jar " + metric_software_name + " " + dir_path)
-    p = subprocess.Popen(["java", "-jar", metric_software_name, dir_path], shell=True,
-                         stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
-                         universal_newlines=True)  # this is for text communication
-
-    p.stdin.write('1')
+    p=subprocess.Popen(["java", "-jar", metric_software_name, dir_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True) #this is for text communication
+    p.stdin.write("1\n")
+    print("here")
     p.wait()
-
 
 # analyse CSV file
 def analyse_csv_file(file_name):
     with open(file_name, newline='') as csvfile:
         data = csv.reader(csvfile, delimiter=',')
         for row in data:
-            print(row)
-
+            print(row[6])
 
 # start_tp1('TP1_IFT3913_project.jar', 'clone_repo')
 # analyse_csv_file('classes.csv')
@@ -69,7 +66,13 @@ with open('data_output.csv', 'w', newline='') as file:
         analyse_csv_file('classes.csv')
         n_classes = files_counter(dirpath, ".java")
         data.append([hex_id, n_classes])
-
+        
     writer = csv.writer(file)
     writer.writerow(["id_version", "n_classes"])
     writer.writerows(data)
+
+
+
+
+
+
