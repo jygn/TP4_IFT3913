@@ -46,3 +46,10 @@ with open('data_output.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["id_version", "n_classes"])
     writer.writerows(data)
+
+
+# execute tp1 metric
+def mediane_classe_BC(metric_software_name, dir_path):
+    os.system("java -jar " + metric_software_name + " " + dir_path)
+
+mediane_classe_BC('TP1_IFT3913_project.jar', 'clone_repo')
