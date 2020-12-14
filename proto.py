@@ -52,4 +52,5 @@ with open('data_output.csv', 'w', newline='') as file:
 def mediane_classe_BC(metric_software_name, dir_path):
     os.system("java -jar " + metric_software_name + " " + dir_path)
 
+
 mediane_classe_BC('TP1_IFT3913_project.jar', 'clone_repo')
