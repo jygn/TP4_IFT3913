@@ -52,13 +52,12 @@ with open('data_output.csv', 'w', newline='') as file:
 # execute tp1 metric
 def mediane_classe_BC(metric_software_name, dir_path):
     # os.system("java -jar " + metric_software_name + " " + dir_path)
-    p=subprocess.Popen(["java", "-jar", metric_software_name, dir_path],
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        universal_newlines=True) #this is for text communication
+    p = subprocess.Popen(["java", "-jar", metric_software_name, dir_path],
+                         stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
+                         universal_newlines=True)  # this is for text communication
     p.stdin.write("1\n")
 
-mediane_classe_BC('TP1_IFT3913_project.jar', 'clone_repo')
 
-
+mediane_classe_BC('TP1_IFT3913_project.jar', dirpath)
