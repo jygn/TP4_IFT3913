@@ -3,6 +3,7 @@ import git
 import os
 import shutil
 import csv
+import subprocess
 
 # deconstruct url to clone via ssh
 url = str(sys.argv[1])
@@ -50,6 +51,14 @@ with open('data_output.csv', 'w', newline='') as file:
 
 # execute tp1 metric
 def mediane_classe_BC(metric_software_name, dir_path):
-    os.system("java -jar " + metric_software_name + " " + dir_path)
+    # os.system("java -jar " + metric_software_name + " " + dir_path)
+    p=subprocess.Popen(["java", "-jar", metric_software_name, dir_path],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        universal_newlines=True) #this is for text communication
+    p.stdin.write("1\n")
 
 mediane_classe_BC('TP1_IFT3913_project.jar', 'clone_repo')
+
+
