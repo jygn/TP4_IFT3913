@@ -15,8 +15,10 @@ dirpath = 'clone_repo'
 # check if repo already exist, if true delete it.
 if os.path.exists(dirpath) and os.path.isdir(dirpath):
     print('git repos already exist')
-    # shutil.rmtree(dirpath)    # javais un bug avec windows10
-    os.system('rmdir /S /Q "{}"'.format(dirpath))  # TODO voir si ca marche sous linux
+    if sys.platform == "linux" or sys.platform == "linux2":
+        shutil.rmtree(dirpath)    # javais un bug avec windows10
+    if sys.platform == "win32":
+        os.system('rmdir /S /Q "{}"'.format(dirpath))  # TODO voir si ca marche sous linux
     print('repo remove')
 
 # checkout repo
