@@ -43,16 +43,16 @@ def files_counter(path, ext):
 
 # execute tp1 metric
 def start_tp1(metric_software_name, path):
-    # os.system("java -jar " + metric_software_name + " " + dir_path)
-    p = subprocess.Popen(["java", "-jar", metric_software_name, path],
-                         shell=True,
-                         stdin=subprocess.PIPE,
-                         stdout=subprocess.PIPE,
-                         universal_newlines=True)  # this is for text communication
-    p.stdin.write("1\n")
-    p.stdin.close()
-    p.stdout.close()
-    p.wait()
+    os.system("java -jar " + metric_software_name + " " + path)
+    # p = subprocess.Popen(["java", "-jar", metric_software_name, path],
+    #                      stdin=subprocess.PIPE,
+    #                      stdout=subprocess.PIPE,
+    #                      stderr=subprocess.PIPE,
+    #                      universal_newlines=True)  # this is for text communication
+    # p.stdin.write("1\n")
+    # p.stdin.close()
+    # p.stdout.close()
+    # p.wait()
 
 
 # analyse CSV file
@@ -61,6 +61,10 @@ def get_csv_column(file_name, column_name):
     t = csv_data[column_name].values
     return csv_data[column_name]
 
+# start_tp1('TP1_IFT3913_project.jar', dirpath)
+# classes_BC = get_csv_column('classes.csv', "classe_BC").values
+
+# print(classes_BC)
 
 with open('data_output.csv', 'w', newline='') as file:
     data = []
