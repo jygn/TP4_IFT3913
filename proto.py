@@ -3,7 +3,6 @@ import git
 import os
 import shutil
 import csv
-import subprocess
 import pandas as pd
 import statistics
 import random
@@ -16,9 +15,9 @@ dirpath = 'clone_repo'
 if os.path.exists(dirpath) and os.path.isdir(dirpath):
     print('git repos already exist')
     if sys.platform == "linux" or sys.platform == "linux2":
-        shutil.rmtree(dirpath)  # javais un bug avec windows10
+        shutil.rmtree(dirpath)
     if sys.platform == "win32":
-        os.system('rmdir /S /Q "{}"'.format(dirpath))  # TODO voir si ca marche sous linux
+        os.system('rmdir /S /Q "{}"'.format(dirpath))
     print('repo remove')
 
 # checkout repo
@@ -60,15 +59,9 @@ def get_csv_column(file_name, column_name):
     csv_data = pd.read_csv(file_name)
     return csv_data[column_name]
 
-# start_tp1('TP1_IFT3913_project.jar', dirpath)
-# classes_BC = get_csv_column('classes.csv', "classe_BC").values
-
-# print(classes_BC)
-
 def get_commits_sample(commits_list):
     sample_size = int(len(commits_list) * (10 / 100))
     return random.sample(commits_list, sample_size)
-
 
 with open('data_output.csv', 'w', newline='') as file:
 
