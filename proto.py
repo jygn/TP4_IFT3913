@@ -2,11 +2,11 @@ import sys
 import git
 import os
 import shutil
-import stat
 import csv
 import subprocess
 import pandas as pd
 import statistics
+import random
 
 # deconstruct url to clone via ssh
 url = str(sys.argv[1])  # https://github.com/bendag/TP1_IFT3913
@@ -16,7 +16,7 @@ dirpath = 'clone_repo'
 if os.path.exists(dirpath) and os.path.isdir(dirpath):
     print('git repos already exist')
     if sys.platform == "linux" or sys.platform == "linux2":
-        shutil.rmtree(dirpath)    # javais un bug avec windows10
+        shutil.rmtree(dirpath)  # javais un bug avec windows10
     if sys.platform == "win32":
         os.system('rmdir /S /Q "{}"'.format(dirpath))  # TODO voir si ca marche sous linux
     print('repo remove')
@@ -58,7 +58,6 @@ def start_tp1(metric_software_name, path):
 # analyse CSV file
 def get_csv_column(file_name, column_name):
     csv_data = pd.read_csv(file_name)
-    t = csv_data[column_name].values
     return csv_data[column_name]
 
 # start_tp1('TP1_IFT3913_project.jar', dirpath)
@@ -66,10 +65,17 @@ def get_csv_column(file_name, column_name):
 
 # print(classes_BC)
 
-with open('data_output.csv', 'w', newline='') as file:
-    data = []
+def get_commits_sample(commits_list):
+    sample_size = int(len(commits_list) * (10 / 100))
+    return random.sample(commits_list, sample_size)
 
-    for commit in commits:
+
+with open('data_output.csv', 'w', newline='') as file:
+
+    data = []
+    commits_sample = get_commits_sample(commits)    # random sample (10% of initial list)
+
+    for commit in commits_sample:
         hex_id = commit.hexsha
         os.system("cd " + dirpath + " && git reset --hard " + hex_id)
 
