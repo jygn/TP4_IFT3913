@@ -33,9 +33,7 @@ commits = list(my_repo.iter_commits('HEAD'))
 # get a sample of commit (10%)
 def get_commits_sample(commits_list):
     sample_size = int(len(commits_list) * (10 / 100))
-    return random.sample(commits_list, sample_size)
-
-# execute tp1 metric
+    return random.sample(commits_list, sa
 def start_tp1(metric_software_name, path):
     os.system("java -jar " + metric_software_name + " " + path)
 
