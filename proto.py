@@ -1,3 +1,4 @@
+import math
 import sys
 import git
 import os
@@ -40,45 +41,34 @@ def files_counter(path, ext):
     return files_nb
 
 
-# execute tp1 metric
-def start_tp1(metric_software_name, path):
-    os.system("java -jar " + metric_software_name + " " + path)
-    # p = subprocess.Popen(["java", "-jar", metric_software_name, path],
-    #                      stdin=subprocess.PIPE,
-    #                      stdout=subprocess.PIPE,
-    #                      stderr=subprocess.PIPE,
-    #                      universal_newlines=True)  # this is for text communication
-    # p.stdin.write("1\n")
-    # p.stdin.close()
-    # p.stdout.close()
-    # p.wait()
-
-
 # analyse CSV file
 def get_csv_column(file_name, column_name):
     csv_data = pd.read_csv(file_name)
     return csv_data[column_name]
 
+
 def get_commits_sample(commits_list):
     sample_size = int(len(commits_list) * (10 / 100))
     return random.sample(commits_list, sample_size)
 
-with open('data_output.csv', 'w', newline='') as file:
 
+with open('data_output.csv', 'w', newline='') as file:
     data = []
-    commits_sample = get_commits_sample(commits)    # random sample (10% of initial list)
+    commits_sample = get_commits_sample(commits)  # random sample (10% of initial list)
 
     for commit in commits_sample:
         hex_id = commit.hexsha
         os.system("cd " + dirpath + " && git reset --hard " + hex_id)
 
-        start_tp1('TP1_IFT3913_project.jar', dirpath)
+        os.system("java -jar TP1_IFT3913_project.jar " + dirpath)    # run tp1
         classes_BC = get_csv_column('classes.csv', "classe_BC").values
 
         if not len(classes_BC):
-            m_c_BC = "nan"
+            m_c_BC = 0
         else:
             m_c_BC = statistics.median(classes_BC)
+            if math.isnan(m_c_BC):
+                m_c_BC = 0
 
         n_classes = files_counter(dirpath, ".java")
         data.append([hex_id, n_classes, m_c_BC])
